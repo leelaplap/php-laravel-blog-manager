@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <form method="post" action="{{route('blog.edit'),$blog->id}}">
+    <form method="post" action="{{route('blog.edit',$blog->id)}}">
         @csrf
         <div class="form-group">
             <label>Name</label>

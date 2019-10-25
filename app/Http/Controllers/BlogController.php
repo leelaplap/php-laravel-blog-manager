@@ -14,16 +14,19 @@ class BlogController extends Controller
         $this->blog = $blog;
     }
 
-    public function showAll(){
-        $blogs = $this->blog->All();
-        return view('blog.index',compact('blogs'));
+    public function showAll()
+    {
+        $blogs = $this->blog->paginate(1);
+        return view('blog.index', compact('blogs'));
     }
 
-    public function showFormAdd(){
+    public function showFormAdd()
+    {
         return view('blog.formAdd');
     }
 
-    public function add(Request $request){
+    public function add(Request $request)
+    {
         $blog = new Blog();
         $blog->name = $request->name;
         $blog->category = $request->category;
@@ -33,18 +36,21 @@ class BlogController extends Controller
         return redirect()->route('blog.list');
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $blog = $this->blog->findOrFail($id);
         $blog->delete();
         return redirect()->route('blog.list');
     }
 
-    public function showFormEdit($id){
+    public function showFormEdit($id)
+    {
         $blog = $this->blog->findOrFail($id);
-        return view("blog.formEdit");
+        return view("blog.formEdit", compact('blog'));
     }
 
-    public function edit(Request $request,$id){
+    public function edit(Request $request, $id)
+    {
         $blog = $this->blog->findOrFail($id);
         $blog->name = $request->name;
         $blog->category = $request->category;
