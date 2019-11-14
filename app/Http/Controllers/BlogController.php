@@ -16,7 +16,7 @@ class BlogController extends Controller
 
     public function showAll()
     {
-        $blogs = $this->blog->paginate(1);
+        $blogs = $this->blog->paginate(5);
         return view('blog.index', compact('blogs'));
     }
 
@@ -59,4 +59,12 @@ class BlogController extends Controller
         return redirect()->route('blog.list');
     }
 
+    public function search(Request $request){
+        if ($request->ajax()){
+            $blogs = Blog::where('name','LIKE',"%$request->search%")->paginate(5);
+            return response()->json($blogs);
+        }
+
+
+    }
 }
